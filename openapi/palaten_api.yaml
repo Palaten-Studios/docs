@@ -2,13 +2,13 @@ openapi: 3.0.0
 info:
   description: "This is the Specification for Palaten-Studios' API Backend (palaten_api)"
   version: 0.0.0
-  title: PalatenBackend
+  title: palaten_api
   termsOfService: https://www.palaten.de/legal/terms/
   contact:
     email: info@palaten.de
   license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    name: MIT
+    url: https://github.com/Palaten-Studios/docs/blob/master/LICENSE
 
 tags:
   - name: validation
@@ -347,8 +347,8 @@ paths:
 
 
 externalDocs:
-  description: Find out more about PalatenBackend
-  url: https://docs.palaten.de/
+  description: Documentation
+  url: https://docs.palaten.de/openapi/palaten_api
 servers:
   - url: https://api.palaten.de
  
