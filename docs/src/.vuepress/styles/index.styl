@@ -17,7 +17,8 @@ body
     min-height 100vh
 
 header.navbar
-    background transparent
+    background rgba(0, 0, 0, 0.5)
+    backdrop-filter blur(20px)
 
     .site-name
         color white
@@ -50,7 +51,10 @@ header.navbar
 
 
 .sidebar
-    background transparent
+    background rgba(0, 0, 0, 0.5)
+    backdrop-filter blur(20px)
+    @media screen and (min-width: 720px)
+        background transparent
 
 .home .hero a.action-button
     color #d8b4fe
