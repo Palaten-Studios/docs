@@ -4,7 +4,7 @@ This is a repository containing all the neccessary Documentation on
 Palaten-Studios' services. This code is publicly available and free
 to use and modify (as long as it complies with the
 [License](https://github.com/Palaten-Studios/docs/blob/master/LICENSE)
-and the [Terms of Service](https://www.palaten.de/legal/terms/).
+and the [Terms of Service](https://www.palaten.de/legal/terms/)).
 
 
 ## Service documentation
