@@ -1,0 +1,19 @@
+{
+  "name": "PalatenDocs",
+  "version": "0.0.1",
+  "description": "Documentation for Palaten-Studios&#39; services",
+  "main": "index.js",
+  "authors": {
+    "name": "Palaten-Studios",
+    "email": "info@palaten.de"
+  },
+  "repository": "https://github.com/Palaten-Studios/docs",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  }
+}

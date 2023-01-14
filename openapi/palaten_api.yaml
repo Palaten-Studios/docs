@@ -46,10 +46,15 @@ paths:
                 properties:
                   version:
                     type: string
+                    description: "The api version."
+                    example: "1.0.0"
                   pgsql:
                     type: string
+                    description: "The postgresql version used. [Learn why we are disclosing this](https://docs.palaten.de/transparency)"
+                    example: "PostgreSQL 14.5 (Ubuntu 14.5-0ubuntu0.22.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.2.0-19ubuntu1) 11.2.0, 64-bit"
                   service:
                     type: string
+                    description: "The service identifier."
                     enum:
                     - "palaten_api"
   /login:
@@ -67,8 +72,12 @@ paths:
               properties:
                 login:
                   type: string
+                  description: "The user's username/email."
+                  example: "example@email.com"
                 password:
                   type: string
+                  description: "The user's password's SHA512 hex digest."
+                  example: "6a1a778143e4672886991729035807cabeb75ad42a3fe4bf580cfbdf5cea7c476705d878af5f0fd0dc07d19f2959e224b21788e561f046177f6752b4bcc59e2c"
       responses:
         "200":
           description: OK
@@ -79,6 +88,8 @@ paths:
                 properties:
                   sessionId:
                     type: string
+                    description: "The sessionId which can be used for authentification."
+                    example: "1FA74E9D04B813BD69CDDE52A3612AB8849E50E2016BC22206E0752EC7956FEE"
 
   /register:
     post:
@@ -95,10 +106,16 @@ paths:
               properties:
                 name:
                   type: string
+                  description: "The username, must be between 4 and 32 characters long and may only include `a-zA-Z0-9_-`."
+                  example: "ExampleUser"
                 password:
                   type: string
+                  description: "The password's SHA512 hex digest."
+                  example: "6A1A778143E4672886991729035807CABEB75AD42A3FE4BF580CFBDF5CEA7C476705D878AF5F0FD0DC07D19F2959E224B21788E561F046177F6752B4BCC59E2C"
                 email:
                   type: string
+                  description: "The email address. Must match `^\\w+(\\.[\\+\\w-]+)*@((\\w+-+)*\\w+\\.){1,}[a-zA-Z]{2,18}$`"
+                  example: "example@email.com"
       responses:
         "200":
           description: OK
@@ -116,7 +133,8 @@ paths:
           required: true
           schema:
             type: string
-            format: hex
+          description: "The code received via email."
+          example: "0F6E7D0EA0C491C8D9A0DDDD0B2FEAFC"
       responses:
         "200":
           description: OK
@@ -151,6 +169,8 @@ paths:
               properties:
                 newUsername:
                   type: string
+                  description: "The new username"
+                  example: "SomeUsername"
       responses:
         "200":
           description: OK
@@ -171,6 +191,8 @@ paths:
               properties:
                 email:
                   type: string
+                  description: "The email address the account is associated with"
+                  example: "example@email.com"
       responses:
         "200":
           description: OK
@@ -190,7 +212,8 @@ paths:
           required: true
           schema:
             type: string
-            format: hex
+          description: "The code received via email."
+          example: "0F6E7D0EA0C491C8D9A0DDDD0B2FEAFC"
       requestBody:
         content:
           application/json:
@@ -199,13 +222,14 @@ paths:
               properties:
                 newPassword:
                   type: string
-                  format: hex
+                  description: "The new password's SHA512 hex digest"
+                  example: "D47B43BBD770EC97823A76A6545B9F8C18E5AE6EB59BD8C9056ED882E18C1414BDE7DE8E166E85B2CB4B42E0A843861803422FF3058FD37F4E6890F4801523C9"
       responses:
         "200":
           description: OK
           
   /account/email/change:
-    get:
+    post:
       tags:
         - authentification
         - account
@@ -213,6 +237,16 @@ paths:
       summary: Request email change
       description: "Requests an email change. This will send an email to both parties."
       operationId: request_email_change
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newEmail:
+                  type: string
+                  description: "The new email"
+                  example: "other@email.com"
       parameters:
         - $ref: "#/components/parameters/sessionId"
       responses:
@@ -234,7 +268,8 @@ paths:
           required: true
           schema:
             type: string
-            format: hex
+          description: "The code received via email."
+          example: "0F6E7D0EA0C491C8D9A0DDDD0B2FEAFC"
       responses:
         "200":
           description: OK
@@ -267,7 +302,8 @@ paths:
           required: true
           schema:
             type: string
-            format: hex
+          description: "The code received via email."
+          example: "0F6E7D0EA0C491C8D9A0DDDD0B2FEAFC"
       responses:
         "200":
           description: OK
@@ -285,6 +321,8 @@ paths:
           required: true
           schema:
             type: integer
+          description: "The user's id"
+          example: 69
       responses:
         "200":
           description: OK
@@ -362,37 +400,79 @@ components:
         - createdAt
       properties:
         id:
-          type: string
+          type: integer
+          minimum: 0
+          description: "The user's id"
+          example: 69
         name:
           type: string
+          description: "The user's name"
+          example: "ExampleUser"
         email:
           type: string
+          description: "The user's email address"
+          example: "example@email.com"
         createdAt:
           type: integer
-          format: u32
+          format: int32
+          minimum: 0
+          example: 1673547962
+          description: "The user's creation date (UTC-Timestamp)"
     
     Session:
       type: object
       properties:
         sudo:
           type: integer
-          format: u32
+          format: int32
+          minimum: 0
+          example: 167234792
+          description: "Indicates when sudo mode will run out (UTC-Timestamp)"
         user:
           $ref: "#/components/schemas/User"
         createdAt:
           type: integer
-          format: u32
+          format: int32
+          minimum: 0
+          example: 134554342
+          description: "The user's creation date (UTC-Timestamp)"
     
     Error:
       type: object
       properties:
         key:
           type: string
+          description: "The error key"
+          enum:
+            - databaseError
+            - invalidCredentials
+            - invalidSession
+            - userAgentMissing
+            - invalidIpAddress
+            - invalidEmail
+            - emailOrNameAlreadyRegistered
+            - emailAlreadyRequestedVerification
+            - invalidVerificationCode
+            - invalidName
+            - invalidSpecs
+            - invalidDuration
+            - invalidPriceType
+            - invalidType
+            - paypalError
+            - invalidUserId
+            - invalidHashFormat
+          example: "invalidCredentials"
         message:
           type: string
+          description: "A more descriptive error message"
+          example: "Invalid credentials"
         statusCode:
           type: integer
-          format: u16
+          format: i32
+          minimum: 0
+          maximum: 599
+          description: "The HTTP Statuscode"
+          example: 401
 
   parameters:
     sessionId:
@@ -401,4 +481,6 @@ components:
       required: true
       schema:
         type: string
-        format: hex
+      description: "The sessionId header (see /login)"
+      example: "1FA74E9D04B813BD69CDDE52A3612AB8849E50E2016BC22206E0752EC7956FEE"
+
