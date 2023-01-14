@@ -10,7 +10,7 @@ and the [Terms of Service](https://www.palaten.de/legal/terms/)).
 ## Service documentation
 
 All the neccessary documentation on how to use our services can be found
-[here](https://docs.palaten.de)
+[here](https://docs.palaten.de).
 
 ## OpenAPI specification
 
