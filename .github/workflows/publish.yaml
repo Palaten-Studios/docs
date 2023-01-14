@@ -26,8 +26,11 @@ jobs:
         with:
           node-version: 16
 
-      - name: Build
+      - name: Build palaten_api spec
         run: npx redoc-cli build -o build/openapi/palaten_api/index.html openapi/palaten_api.yaml
+
+      - name: Build Vuepress
+        run: cd docs && npm install && npm run build && mv src/.vuepress/dist ../build/docs
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1.0.3

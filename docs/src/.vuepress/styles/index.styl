@@ -1,0 +1,71 @@
+/**
+ * Custom Styles here.
+ *
+ * ref：https://v1.vuepress.vuejs.org/config/#index-styl
+ */
+
+body
+    background transparent
+
+html
+    background-image url('https://www.palaten.de/img/bg.webp')
+    background-size cover
+    min-height 100vh
+
+body
+    background rgba(0, 0, 0, 0.8)
+    min-height 100vh
+
+header.navbar
+    background transparent
+
+    .site-name
+        color white
+
+    .nav-links
+        .nav-item
+            .nav-link
+                color white
+
+    .links
+        background transparent
+
+        div.search-box
+            input
+                background black url(/assets/img/search.83621669.svg) 0.6rem 0.5rem no-repeat
+                background-size 1rem
+                border 1px solid #333
+
+            ul.suggestions
+                background rgba(0, 0, 0, 0.2)
+
+                li
+                    color #aaa
+                    background transparent
+                    &:hover
+                        color #fff
+
+            input.focused
+                border 1px solid #6b21a8
+
+
+.sidebar
+    background transparent
+
+.home .hero a.action-button
+    color #d8b4fe
+    border 1px solid #d8b4fe
+    background transparent
+
+    border-radius 20px
+    padding 10px 20px
+
+    &:hover
+        background #d8b4fe
+        color #6b21a8
+
+h1, h2, h3, h4, span
+    color #ddd
+
+.home .hero img
+  max-width 450px!important
