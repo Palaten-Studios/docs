@@ -1,0 +1,404 @@
+openapi: 3.0.0
+info:
+  description: "This is the Specification for Palaten-Studios' API Backend (palaten_api)"
+  version: 0.0.0
+  title: PalatenBackend
+  termsOfService: https://www.palaten.de/legal/terms/
+  contact:
+    email: info@palaten.de
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+tags:
+  - name: validation
+    description: Operations about validating that something is correct
+  - name: authentification
+    description: Operations about authenticating/changing authentification
+  - name: verification
+    description: Operations that require a code received via email
+  - name: account
+    description: Operations about changing account details
+  - name: sudo
+    description: Operations that require sudo mode
+  - name: fetch
+    description: Operations that fetch data
+#    externalDocs:
+#      description: Find out more
+#      url: https://docs.palaten.de/
+
+paths:
+  /:
+    get:
+      tags:
+        - validation
+        - fetch
+      summary: Fetch instance information
+      description: "Fetches important information about the instance like the version or which service is running. Mostly used for validation."
+      operationId: info
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                  pgsql:
+                    type: string
+                  service:
+                    type: string
+                    enum:
+                    - "palaten_api"
+  /login:
+    post:
+      tags:
+        - authentification
+      summary: Login
+      description: "Logs into an existing account using a username/email and a password. This will return a sessionId which can be later used in other requests to authenticate."
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sessionId:
+                    type: string
+
+  /register:
+    post:
+      tags:
+        - authentification
+      summary: Register
+      description: "Creates a new account. Needs to be verified via email before login is possible."
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+                email:
+                  type: string
+      responses:
+        "200":
+          description: OK
+  
+  "/verify/{code}":
+    get:
+      tags:
+        - verification
+      summary: Verify email
+      description: "Verifies an account by a code received via email."
+      operationId: verify
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+            format: hex
+      responses:
+        "200":
+          description: OK
+  
+  /logout:
+    post:
+      tags:
+        - authentification
+      summary: Logout
+      description: "Destroys the active session."
+      operationId: logout
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+      responses:
+        "200":
+          description: OK
+          
+  /account/username/change:
+    post:
+      tags:
+        - authentification
+        - account
+        - sudo
+      summary: Change username
+      description: "Changes the username of a user. This will **NOT** send an email."
+      operationId: username_change
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newUsername:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          
+  /account/password/change:
+    post:
+      tags:
+        - authentification
+        - account
+      summary: Request a password reset
+      description: "Requests a password reset. This will send an email to the address referenced if an account with such exists."
+      operationId: request_password_change
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        "200":
+          description: OK
+
+  /account/password/change/{code}:
+    post:
+      tags:
+        - authentification
+        - account
+        - verification
+      summary: Reset password
+      description: "Resets the password by a code received via email."
+      operationId: password_change
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+            format: hex
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newPassword:
+                  type: string
+                  format: hex
+      responses:
+        "200":
+          description: OK
+          
+  /account/email/change:
+    get:
+      tags:
+        - authentification
+        - account
+        - sudo
+      summary: Request email change
+      description: "Requests an email change. This will send an email to both parties."
+      operationId: request_email_change
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+      responses:
+        "200":
+          description: OK
+
+  /account/email/change/{code}:
+    get:
+      tags:
+        - authentification
+        - account
+        - verification
+      summary: Change email
+      description: "Verifies ownership via a code before changing the email. Both parties will need to accept (make a request with the received code to this route) before the email will be changed."
+      operationId: email_change
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+            format: hex
+      responses:
+        "200":
+          description: OK
+    
+  /account/delete:
+    get:
+      tags:
+        - account
+        - sudo
+      summary: Request account deletion
+      description: "Requests an account deletion. This will send an email."
+      operationId: request_account_delete
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+      responses:
+        "200":
+          description: OK
+
+  /account/delete/{code}:
+    get:
+      tags:
+        - account
+        - verification
+      summary: Delete account
+      description: "Deletes an account. This will act as our [Privacy Policy](https://www.palaten.de/legal/privacy/) states."
+      operationId: account_delete
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+            format: hex
+      responses:
+        "200":
+          description: OK
+
+  /users/{id}:
+    get:
+      tags:
+        - fetch
+      summary: Fetch user
+      description: "Fetches a user via its id."
+      operationId: users_fetch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/me:
+    get:
+      tags:
+        - fetch
+      summary: Fetch self
+      description: "Fetches the user affiliated with the session"
+      operationId: users_self
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /session:
+    get:
+      tags:
+        - fetch
+      summary: Fetch session
+      description: "Fetches information about the session"
+      operationId: session
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+                
+  /sudo:
+    post:
+      tags:
+        - authentification
+      summary: Sudo Mode
+      description: "Enables the sudo mode (Required for critical actions)."
+      operationId: sudo
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+      responses:
+        "200":
+          description: OK
+
+
+externalDocs:
+  description: Find out more about PalatenBackend
+  url: https://docs.palaten.de/
+servers:
+  - url: https://api.palaten.de
+ 
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - createdAt
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: integer
+          format: u32
+    
+    Session:
+      type: object
+      properties:
+        sudo:
+          type: integer
+          format: u32
+        user:
+          $ref: "#/components/schemas/User"
+        createdAt:
+          type: integer
+          format: u32
+    
+    Error:
+      type: object
+      properties:
+        key:
+          type: string
+        message:
+          type: string
+        statusCode:
+          type: integer
+          format: u16
+
+  parameters:
+    sessionId:
+      name: sessionId
+      in: header
+      required: true
+      schema:
+        type: string
+        format: hex
