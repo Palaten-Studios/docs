@@ -171,6 +171,8 @@ paths:
                   type: string
                   description: "The new username"
                   example: "SomeUsername"
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
       responses:
         "200":
           description: OK
