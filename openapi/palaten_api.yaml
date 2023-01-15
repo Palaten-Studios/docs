@@ -77,7 +77,7 @@ paths:
                 password:
                   type: string
                   description: "The user's password's SHA512 hex digest."
-                  example: "6a1a778143e4672886991729035807cabeb75ad42a3fe4bf580cfbdf5cea7c476705d878af5f0fd0dc07d19f2959e224b21788e561f046177f6752b4bcc59e2c"
+                  example: "6A1A778143E4672886991729035807CABEB75AD42A3FE4BF580CFBDF5CEA7C476705D878AF5F0FD0DC07D19F2959E224B21788E561F046177F6752B4BCC59E2C"
       responses:
         "200":
           description: OK
@@ -377,6 +377,15 @@ paths:
       summary: Sudo Mode
       description: "Enables the sudo mode (Required for critical actions)."
       operationId: sudo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              password:
+                type: string
+                description: "The user's password's SHA512 hex digest"
+                example: "6A1A778143E4672886991729035807CABEB75AD42A3FE4BF580CFBDF5CEA7C476705D878AF5F0FD0DC07D19F2959E224B21788E561F046177F6752B4BCC59E2C"
       parameters:
         - $ref: "#/components/parameters/sessionId"
       responses:
