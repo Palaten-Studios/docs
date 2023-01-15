@@ -392,7 +392,15 @@ paths:
       responses:
         "200":
           description: OK
-
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  expires:
+                    type: number
+                    description: "The new sudo expiring date"
+                    example: 39234893
 
 externalDocs:
   description: Documentation
