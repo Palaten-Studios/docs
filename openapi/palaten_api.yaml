@@ -276,8 +276,8 @@ paths:
         "200":
           description: OK
     
-  /account/delete:
-    get:
+  /account:
+    delete:
       tags:
         - account
         - sudo
@@ -290,8 +290,8 @@ paths:
         "200":
           description: OK
 
-  /account/delete/{code}:
-    get:
+  /account/{code}:
+    delete:
       tags:
         - account
         - verification
