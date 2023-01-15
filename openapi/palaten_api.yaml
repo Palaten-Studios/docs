@@ -382,10 +382,11 @@ paths:
           application/json:
             schema:
               type: object
-              password:
-                type: string
-                description: "The user's password's SHA512 hex digest"
-                example: "6A1A778143E4672886991729035807CABEB75AD42A3FE4BF580CFBDF5CEA7C476705D878AF5F0FD0DC07D19F2959E224B21788E561F046177F6752B4BCC59E2C"
+              properties:
+                password:
+                  type: string
+                  description: "The user's password's SHA512 hex digest"
+                  example: "6A1A778143E4672886991729035807CABEB75AD42A3FE4BF580CFBDF5CEA7C476705D878AF5F0FD0DC07D19F2959E224B21788E561F046177F6752B4BCC59E2C"
       parameters:
         - $ref: "#/components/parameters/sessionId"
       responses:
