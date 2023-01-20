@@ -138,6 +138,15 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sessionId:
+                    type: string
+                    description: "The session id"
+                    example: "1FA74E9D04B813BD69CDDE52A3612AB8849E50E2016BC22206E0752EC7956FEE"
   
   /logout:
     post:
