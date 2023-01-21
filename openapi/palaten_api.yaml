@@ -474,22 +474,21 @@ components:
           description: "The error key"
           enum:
             - databaseError
+            - userAgentMissing
+            - paypalError
             - invalidCredentials
             - invalidSession
-            - userAgentMissing
             - invalidIpAddress
             - invalidEmail
-            - emailOrNameAlreadyRegistered
-            - emailAlreadyRequestedVerification
             - invalidVerificationCode
             - invalidName
             - invalidSpecs
             - invalidDuration
             - invalidPriceType
             - invalidType
-            - paypalError
             - invalidUserId
             - invalidHashFormat
+            - detailsTaken
           example: "invalidCredentials"
         message:
           type: string
