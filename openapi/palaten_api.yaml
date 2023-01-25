@@ -114,7 +114,7 @@ paths:
                   example: "6A1A778143E4672886991729035807CABEB75AD42A3FE4BF580CFBDF5CEA7C476705D878AF5F0FD0DC07D19F2959E224B21788E561F046177F6752B4BCC59E2C"
                 email:
                   type: string
-                  description: "The email address. Must match `^\\w+(\\.[\\+\\w-]+)*@((\\w+-+)*\\w+\\.){1,}[a-zA-Z]{2,18}$`"
+                  description: "The email address. Must match `^[\\w-]+(\\.[\\w-]+)*@((\\w+-+)*\\w+\\.){1,}[a-zA-Z]{2,18}$`"
                   example: "example@email.com"
       responses:
         "200":
@@ -474,22 +474,21 @@ components:
           description: "The error key"
           enum:
             - databaseError
+            - userAgentMissing
+            - paypalError
             - invalidCredentials
             - invalidSession
-            - userAgentMissing
             - invalidIpAddress
             - invalidEmail
-            - emailOrNameAlreadyRegistered
-            - emailAlreadyRequestedVerification
             - invalidVerificationCode
             - invalidName
             - invalidSpecs
             - invalidDuration
             - invalidPriceType
             - invalidType
-            - paypalError
             - invalidUserId
             - invalidHashFormat
+            - detailsTaken
           example: "invalidCredentials"
         message:
           type: string
