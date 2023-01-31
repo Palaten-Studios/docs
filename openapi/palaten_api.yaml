@@ -515,13 +515,9 @@ paths:
             type: integer
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: string
-              properties:
-                password:
-                  type: string
-                  description: "The new payload."
       responses:
         "200":
           description: OK
