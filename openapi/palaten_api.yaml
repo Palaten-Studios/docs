@@ -545,7 +545,7 @@ components:
           enum:
             - "EUR"
         total:
-          type: integer
+          type: number
           description: "The total price of the cart. Should be checked against the sum of product totals for validation."
 
     CartEntry:
@@ -561,7 +561,7 @@ components:
           type: string
           description: "Extra product data. => URL encoded payload."
         total:
-          type: integer
+          type: number
           description: "The total price of the product. Used for validation."
 
     User:
