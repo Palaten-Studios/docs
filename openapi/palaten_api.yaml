@@ -11,24 +11,26 @@ info:
     url: https://github.com/Palaten-Studios/docs/blob/master/LICENSE
 
 tags:
-  - name: validation
-    description: Operations about validating that something is correct
-  - name: authentification
-    description: Operations about authenticating/changing authentification
-  - name: verification
-    description: Operations that require a code received via email
   - name: account
     description: Operations about changing account details
-  - name: sudo
-    description: Operations that require sudo mode
+  - name: authentification
+    description: Operations about authenticating/changing authentification
+  - name: cart
+    description: Operations about managing the cart
   - name: fetch
     description: Operations that fetch data
+  - name: sudo
+    description: Operations that require sudo mode
+  - name: validation
+    description: Operations about validating that something is correct
+  - name: verification
+    description: Operations that require a code received via email
 #    externalDocs:
 #      description: Find out more
 #      url: https://docs.palaten.de/
 
 paths:
-  /:
+  "/":
     get:
       tags:
         - validation
@@ -117,7 +119,7 @@ paths:
                   description: "The email address. Must match `^[\\w-]+(\\.[\\w-]+)*@((\\w+-+)*\\w+\\.){1,}[a-zA-Z]{2,18}$`"
                   example: "example@email.com"
       responses:
-        "200":
+        "204":
           description: OK
   
   "/verify/{code}":
@@ -158,7 +160,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/sessionId"
       responses:
-        "200":
+        "204":
           description: OK
           
   /account/username/change:
@@ -183,7 +185,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/sessionId"
       responses:
-        "200":
+        "204":
           description: OK
           
   /account/password/change:
@@ -205,7 +207,7 @@ paths:
                   description: "The email address the account is associated with"
                   example: "example@email.com"
       responses:
-        "200":
+        "204":
           description: OK
 
   /account/password/change/{code}:
@@ -236,7 +238,7 @@ paths:
                   description: "The new password's SHA512 hex digest"
                   example: "D47B43BBD770EC97823A76A6545B9F8C18E5AE6EB59BD8C9056ED882E18C1414BDE7DE8E166E85B2CB4B42E0A843861803422FF3058FD37F4E6890F4801523C9"
       responses:
-        "200":
+        "204":
           description: OK
           
   /account/email/change:
@@ -261,7 +263,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/sessionId"
       responses:
-        "200":
+        "204":
           description: OK
 
   /account/email/change/{code}:
@@ -282,7 +284,7 @@ paths:
           description: "The code received via email."
           example: "0F6E7D0EA0C491C8D9A0DDDD0B2FEAFC"
       responses:
-        "200":
+        "204":
           description: OK
     
   /account:
@@ -296,7 +298,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/sessionId"
       responses:
-        "200":
+        "204":
           description: OK
 
   /account/{code}:
@@ -316,7 +318,7 @@ paths:
           description: "The code received via email."
           example: "0F6E7D0EA0C491C8D9A0DDDD0B2FEAFC"
       responses:
-        "200":
+        "204":
           description: OK
 
   /users/{id}:
@@ -413,6 +415,118 @@ paths:
                     description: "The new sudo expiring date"
                     example: 39234893
 
+  # Cart API
+  /cart:
+    get:
+      tags:
+        - cart
+      summary: Get cart
+      description: "Fetches the current cart."
+      operationId: cart
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+    delete:
+      tags:
+        - cart
+      summary: Clear cart
+      description: "Clears the current cart."
+      operationId: cart_clear
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+      responses:
+        "204":
+          description: OK
+    
+    put:
+      tags:
+        - cart
+      summary: Add to cart
+      description: "Adds a new cart entry to the cart. The entry (including its payload) is checked for validity."
+      operationId: cart_put
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CartEntry"
+      responses:
+        "204":
+          description: OK
+
+  /cart/{id}:
+    get:
+      tags:
+        - cart
+      summary: Get cart entry
+      description: "Fetches a cart entry via its identifier."
+      operationId: cart_entry
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartEntry"
+
+    delete:
+      tags:
+        - cart
+      summary: Delete cart entry
+      description: "Removes an entry from a cart."
+      operationId: cart_entry_delete
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+
+    patch:
+      tags:
+        - cart
+      summary: Modify cart entry
+      description: "Modifies the cart's data payload. The payload is checked for validity."
+      operationId: cart_entry_patch
+      parameters:
+        - $ref: "#/components/parameters/sessionId"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              properties:
+                password:
+                  type: string
+                  description: "The new payload."
+      responses:
+        "200":
+          description: OK
+
+
 externalDocs:
   description: Documentation
   url: https://docs.palaten.de/openapi/palaten_api
@@ -421,6 +535,39 @@ servers:
  
 components:
   schemas:
+    Cart:
+      description: "One cart belongs to an user each."
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartEntry"
+        currency:
+          type: string
+          description: "The currency format."
+          enum:
+            - "EUR"
+        total:
+          type: integer
+          description: "The total price of the cart. Should be checked against the sum of product totals for validation."
+
+    CartEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "The identifier. Used for modifying cart entries."
+        product:
+          type: string
+          description: "The product identifier."
+        data:
+          type: string
+          description: "Extra product data. => URL encoded payload."
+        total:
+          type: integer
+          description: "The total price of the product. Used for validation."
+
     User:
       type: object
       required:
