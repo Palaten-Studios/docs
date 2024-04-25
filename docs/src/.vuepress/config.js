@@ -39,7 +39,7 @@ module.exports = {
       },
       {
         text: 'Frontline',
-    link: '/Frontline/',
+        link: '/frontline/',
       }
     ],
     sidebar: {
@@ -52,19 +52,19 @@ module.exports = {
             '',
             'create-account',
             'game-launcher',
-            'Discord Server',
-            'Webiste',
-            'Sozial Media',        
+            'discord-server',
+            'website',
+            'social-media',        
           ],
         },
       ],
-      '/Frontline/': 
+      '/frontline/': 
       [
         {
           title: 'Frontline',
           collapsable: true,
           children: [
-            'Account',        
+            'account',        
           ],
         }
       ],

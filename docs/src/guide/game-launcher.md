@@ -1,3 +1,3 @@
-# game-launcher
+# Game Launcher
 
-Palaten Studios Game Launcher.
+Palaten Studios Game Launcher
