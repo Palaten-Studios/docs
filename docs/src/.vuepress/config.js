@@ -37,16 +37,35 @@ module.exports = {
         text: 'Guide',
         link: '/guide/',
       },
+      {
+        text: 'Frontline',
+    link: '/Frontline/',
+      }
     ],
     sidebar: {
-      '/guide/': [
+      '/guide/': 
+      [
         {
           title: 'Guide',
           collapsable: true,
           children: [
             '',
             'create-account',
-          ]
+            'game-launcher',
+            'Discord Server',
+            'Webiste',
+            'Sozial Media',        
+          ],
+        },
+      ],
+      '/Frontline/': 
+      [
+        {
+          title: 'Frontline',
+          collapsable: true,
+          children: [
+            'Account',        
+          ],
         }
       ],
     }
