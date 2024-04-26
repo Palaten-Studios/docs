@@ -41,6 +41,10 @@ module.exports = {
         text: 'Frontline',
         link: '/frontline/',
       }
+      {
+          text: 'LOTSR',
+          link: '/LOTSR/',
+      }
     ],
     sidebar: {
       '/guide/': 
@@ -79,3 +83,5 @@ module.exports = {
     '@vuepress/plugin-medium-zoom',
   ]
 }
+
+//# @dragon kannst du bitte den fehler in zeile 45 Fixen
