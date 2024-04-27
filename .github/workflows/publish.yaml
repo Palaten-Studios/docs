@@ -32,24 +32,10 @@ jobs:
       - name: Build Vuepress
         run: cd docs && npm install && npm run build && mv src/.vuepress/dist/* ../build
 
-      - name: Archive artifact
-        shell: sh
-        if: runner.os == 'Linux'
-        run: |
-          echo ::group::Archive artifact
-          tar \
-            --dereference --hard-dereference \
-            --directory "./build" \
-            -cvf "./artifact.tar" \
-            --exclude=.git \
-            --exclude=.github \
-            .
-          echo ::endgroup::
-
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
-          path: ./artifact.tar
+          path: build
 
       - name: Deploy GitHub Pages site
         uses: actions/deploy-pages@v4.0.5
