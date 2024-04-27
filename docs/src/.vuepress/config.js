@@ -52,13 +52,12 @@ export default defineUserConfig({
             },
             {
                 text: 'Social Media',
-                link: 'social-meida'
+                link: 'social-media'
             }     
           ],
         },
       ]
-    },
-    repo: 'Palaten-Studios/docs'
+    }
   }),
 
   lang: 'en-US',
