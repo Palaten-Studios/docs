@@ -37,18 +37,31 @@ module.exports = {
         text: 'Guide',
         link: '/guide/',
       },
+      {
+        text: 'Frontline',
+        link: '/frontline/',
+      },
+      {
+          text: 'LOTSR',
+          link: '/lotsr/',
+      }
     ],
     sidebar: {
-      '/guide/': [
+      '/guide/': 
+      [
         {
           title: 'Guide',
           collapsable: true,
           children: [
             '',
             'create-account',
-          ]
-        }
-      ],
+            'game-launcher',
+            'discord-server',
+            'website',
+            'social-media',        
+          ],
+        },
+      ]
     }
   },
 
@@ -60,3 +73,5 @@ module.exports = {
     '@vuepress/plugin-medium-zoom',
   ]
 }
+
+//# @dragon kannst du bitte den fehler in zeile 45 Fixen
