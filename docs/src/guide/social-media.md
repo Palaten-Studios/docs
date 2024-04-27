@@ -12,4 +12,4 @@ You can choose your favorite platform via the links here.
 [Discord](discord-server.md)  
 
 
-<!-- @dragon kannst du bitte die Links in Form eines Icons der jeweiligen Platform darstellen -->
+<!-- TODO: @dragon kannst du bitte die Links in Form eines Icons der jeweiligen Platform darstellen -->

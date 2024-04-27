@@ -1,77 +1,67 @@
-const { description } = require('../../package')
+import { viteBundler } from '@vuepress/bundler-vite'
+import { defaultTheme } from '@vuepress/theme-default'
+import { defineUserConfig } from 'vuepress'
+import { description } from '../../package'
 
-module.exports = {
-  /**
-   * Ref：https://v1.vuepress.vuejs.org/config/#title
-   */
-  title: 'Palaten Docs',
-  /**
-   * Ref：https://v1.vuepress.vuejs.org/config/#description
-   */
-  description: description,
-
-  /**
-   * Extra tags to be injected to the page HTML `<head>`
-   *
-   * ref：https://v1.vuepress.vuejs.org/config/#head
-   */
+export default defineUserConfig({
+  bundler: viteBundler(),
   head: [
     ['meta', { name: 'theme-color', content: '#694209' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]
   ],
-
-  /**
-   * Theme configuration, here is the default theme configuration for VuePress.
-   *
-   * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
-   */
-  themeConfig: {
-    repo: '',
-    editLinks: false,
-    docsDir: '',
-    editLinkText: '',
-    lastUpdated: false,
-    nav: [
-      {
-        text: 'Guide',
-        link: '/guide/',
-      },
-      {
-        text: 'Frontline',
-        link: '/frontline/',
-      },
-      {
-          text: 'LOTSR',
-          link: '/lotsr/',
-      }
-    ],
+  theme: defaultTheme({
+    colorMode: 'dark',
+    colorModeSwitch: false,
+    navbar: [
+        {
+          text: 'Guide',
+          link: '/guide/',
+        },
+        {
+          text: 'Frontline',
+          link: '/frontline/',
+        },
+        {
+            text: 'LOTSR',
+            link: '/lotsr/',
+        }
+      ],
     sidebar: {
-      '/guide/': 
+        '/guide/': 
       [
         {
-          title: 'Guide',
+          text: 'Guide',
           collapsable: true,
           children: [
-            '',
-            'create-account',
-            'game-launcher',
-            'discord-server',
-            'website',
-            'social-media',        
+            {
+                text: 'Create Account',
+                link: 'create-account'
+            },
+            {
+                text: 'Game Launcher',
+                link: 'game-launcher'
+            },
+            {
+                text: 'Discord Server',
+                link: 'discord-server'
+            },
+            {
+                text: 'Website',
+                link: 'website'
+            },
+            {
+                text: 'Social Media',
+                link: 'social-meida'
+            }     
           ],
         },
       ]
-    }
-  },
+    },
+    repo: 'Palaten-Studios/docs'
+  }),
 
-  /**
-   * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
-   */
-  plugins: [
-    '@vuepress/plugin-back-to-top',
-    '@vuepress/plugin-medium-zoom',
-  ]
-}
-
-//# @dragon kannst du bitte den fehler in zeile 45 Fixen
+  lang: 'en-US',
+  title: 'Palaten Docs',
+  description: description
+})
