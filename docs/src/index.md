@@ -2,8 +2,10 @@
 home: true
 heroImage: https://www.palaten.de/img/server.webp
 tagline: Documentation for Palaten-Studios' services
-actionText: Quick Start →
-actionLink: /guide/
+actions:
+  - text: Quick Start →
+    link: guide/
+    type: primary
 features:
 #- title: Reliable
 #  details: Our services use multilevel validation to improve reliability. *lel* [Learn More](/reliable/)

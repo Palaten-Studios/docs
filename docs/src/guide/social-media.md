@@ -10,6 +10,3 @@ You can choose your favorite platform via the links here.
 [Twitter](https://twitter.com/PalatenStudios)
 [TikTok](https://www.tiktok.com/@palaten_studios)
 [Discord](discord-server.md)  
-
-
-<!-- @dragon kannst du bitte die Links in Form eines Icons der jeweiligen Platform darstellen -->

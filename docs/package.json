@@ -1,5 +1,5 @@
 {
-  "name": "PalatenDocs",
+  "name": "palaten-docs",
   "version": "0.0.1",
   "description": "Documentation for Palaten-Studios&#39; services",
   "main": "index.js",
@@ -14,9 +14,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "vuepress": "^1.9.8"
-  },
-  "dependencies": {
-    "@vuepress/core": "^1.9.10"
+    "@vuepress/bundler-vite": "^2.0.0-rc.9",
+    "@vuepress/theme-default": "^2.0.0-rc.26",
+    "vue": "^3.4.25",
+    "vuepress": "^2.0.0-rc.9"
   }
 }
