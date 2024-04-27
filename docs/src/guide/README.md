@@ -10,6 +10,7 @@ You might wanna check out how to
 [Create an Account](create-account.md)  
 [Use our Game Launcher](game-launcher.md)
 
-[Our video game Frontline](../frontline)
-
+## Games
+[Frontline](../frontline)<br>
+[LOTSR](../lotsr)
 

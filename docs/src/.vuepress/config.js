@@ -40,10 +40,10 @@ module.exports = {
       {
         text: 'Frontline',
         link: '/frontline/',
-      }
+      },
       {
           text: 'LOTSR',
-          link: '/LOTSR/',
+          link: '/lotsr/',
       }
     ],
     sidebar: {
@@ -61,17 +61,7 @@ module.exports = {
             'social-media',        
           ],
         },
-      ],
-      '/frontline/': 
-      [
-        {
-          title: 'Frontline',
-          collapsable: true,
-          children: [
-            'account',        
-          ],
-        }
-      ],
+      ]
     }
   },
 
